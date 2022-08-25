@@ -3017,10 +3017,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       ]));
     }
     next() {
-      this.drawnInstructions.forEach((instruction) => {
-        const actualY = instruction.pos.y;
-        animation(1, (percent) => {
-          instruction.pos.y = actualY - this.yUnit * percent;
+      const actualYs = this.drawnInstructions.map((x) => x.pos.y);
+      return animation(1, (percent) => {
+        this.drawnInstructions.forEach((x, i) => {
+          x.pos.y = actualYs[i] - this.yUnit * percent;
         });
       });
     }

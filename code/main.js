@@ -136,10 +136,10 @@ class PlanPanel {
   }
 
   next() {
-    this.drawnInstructions.forEach((instruction) => {
-      const actualY = instruction.pos.y
-      animation(1, (percent) => {
-        instruction.pos.y = actualY - this.yUnit * percent
+    const actualYs = this.drawnInstructions.map(x => x.pos.y)
+    return animation(1, (percent) => {
+      this.drawnInstructions.forEach((x, i) => {
+        x.pos.y = actualYs[i] - this.yUnit * percent
       })
     })
   }
