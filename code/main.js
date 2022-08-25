@@ -7,6 +7,8 @@ kaboom()
 loadSprite("bean", "sprites/bean.png")
 loadSprite("steel", "sprites/steel.png")
 
+const cellSize = vec2(65, 65)
+
 function getMapTiles() {
   return [
     '##########',
@@ -41,14 +43,17 @@ function loadInstructions() {
   return Array(7).fill(ops.right)
 }
 
-const blockPos = (x, y) => pos(x*65, y*65) 
+const blockPos = (x, y) => pos(x * 65, y * 65)
 
 function interpretMap(map, state) {
   function makePlayer(blockX, blockY) {
     return add([
       sprite("bean"),
       blockPos(blockX, blockY),
-      area()
+      area(),
+      {
+        direction: RIGHT
+      }
     ])
   }
 
@@ -59,7 +64,7 @@ function interpretMap(map, state) {
       area()
     ])
   }
-  
+
   map.forEach((row, y) => {
     Array.prototype.forEach.call(row, (c, x) => {
       if (c == 'p') {
@@ -69,18 +74,27 @@ function interpretMap(map, state) {
       }
     })
   })
-  
+
 }
 
 const state = {}
 const map = getMapTiles()
 interpretMap(map, state)
-const {player} = state
+const { player } = state
 
 const instructions = loadInstructions()
+let opPointer = 0
+const doInstruction = (player) => {
+  instructions[opPointer].action(player)
+}
+const nextInstruction = () => {
+  opPointer += 1
+}
+
+const hasNextInstruction = () => opPointer < instructions.length
 
 function topLeftCorner() {
-  return camPos().sub(width()/2, height()/2)
+  return camPos().sub(width() / 2, height() / 2)
 }
 
 function guiPos(_x, _y) {
@@ -105,7 +119,7 @@ function animation(duration, callback) {
   let t = 0
   const stop = onUpdate(() => {
     t += dt()
-    callback(t/duration)
+    callback(t / duration)
   })
   return wait(duration, stop)
 }
@@ -129,7 +143,7 @@ class PlanPanel {
 
     this.drawnInstructions = this.instructions
       .map((x, y) => add([
-        text(x.name()), 
+        text(x.name()),
         pos(65, 65 * y),
         fixed()
       ]))
@@ -152,7 +166,23 @@ onUpdate(() => {
   camPos(player.pos)
 })
 
+async function stepPlayer() {
+  while (hasNextInstruction()) {
+    doInstruction(player)
+    const currentPos = player.pos
+    await animation(1, (percent) => {
+      player.pos = currentPos.add(cellSize.scale(player.direction).scale(percent))
+    })
+    nextInstruction()
+    await planPanel.next()
+  }
+
+}
+
+loop(1, () => {
+
+})
 wait(1, () => {
-  planPanel.next()
+  stepPlayer()
 })
 

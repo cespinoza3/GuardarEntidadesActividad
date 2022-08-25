@@ -6,6 +6,26 @@
     __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
     return value;
   };
+  var __async = (__this, __arguments, generator) => {
+    return new Promise((resolve, reject) => {
+      var fulfilled = (value) => {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      };
+      var rejected = (value) => {
+        try {
+          step(generator.throw(value));
+        } catch (e) {
+          reject(e);
+        }
+      };
+      var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+      step((generator = generator.apply(__this, __arguments)).next());
+    });
+  };
 
   // node_modules/kaboom/dist/kaboom.mjs
   var ir = Object.defineProperty;
@@ -2921,6 +2941,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   no();
   loadSprite("bean", "sprites/bean.png");
   loadSprite("steel", "sprites/steel.png");
+  var cellSize = vec2(65, 65);
   function getMapTiles() {
     return [
       "##########",
@@ -2959,7 +2980,10 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       return add([
         sprite("bean"),
         blockPos(blockX, blockY),
-        area()
+        area(),
+        {
+          direction: RIGHT
+        }
       ]);
     }
     __name(makePlayer, "makePlayer");
@@ -2987,6 +3011,14 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   interpretMap(map, state);
   var { player } = state;
   var instructions = loadInstructions();
+  var opPointer = 0;
+  var doInstruction = /* @__PURE__ */ __name((player2) => {
+    instructions[opPointer].action(player2);
+  }, "doInstruction");
+  var nextInstruction = /* @__PURE__ */ __name(() => {
+    opPointer += 1;
+  }, "nextInstruction");
+  var hasNextInstruction = /* @__PURE__ */ __name(() => opPointer < instructions.length, "hasNextInstruction");
   function animation(duration, callback) {
     let t = 0;
     const stop = onUpdate(() => {
@@ -3031,8 +3063,24 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   onUpdate(() => {
     camPos(player.pos);
   });
+  function stepPlayer() {
+    return __async(this, null, function* () {
+      while (hasNextInstruction()) {
+        doInstruction(player);
+        const currentPos = player.pos;
+        yield animation(1, (percent) => {
+          player.pos = currentPos.add(cellSize.scale(player.direction).scale(percent));
+        });
+        nextInstruction();
+        yield planPanel.next();
+      }
+    });
+  }
+  __name(stepPlayer, "stepPlayer");
+  loop(1, () => {
+  });
   wait(1, () => {
-    planPanel.next();
+    stepPlayer();
   });
 })();
 //# sourceMappingURL=game.js.map
