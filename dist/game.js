@@ -136,13 +136,13 @@
   }
   __name(Ve, "Ve");
   a(Ve, "lerp");
-  function dt(i, t, l, w, U) {
+  function dt2(i, t, l, w, U) {
     return w + (i - t) / (l - t) * (U - w);
   }
-  __name(dt, "dt");
-  a(dt, "map");
+  __name(dt2, "dt");
+  a(dt2, "map");
   function dr(i, t, l, w, U) {
-    return z(dt(i, t, l, w, U), w, U);
+    return z(dt2(i, t, l, w, U), w, U);
   }
   __name(dr, "dr");
   a(dr, "mapc");
@@ -2548,7 +2548,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
         throw new Error("lifespan() requires time");
       let r = 0, u = (s = n.fade) != null ? s : 0, c = Math.max(e - u, 0);
       return { id: "lifespan", update() {
-        r += Z(), r >= c && (this.opacity = dt(r, c, e, 1, 0)), r >= e && this.destroy();
+        r += Z(), r >= c && (this.opacity = dt2(r, c, e, 1, 0)), r >= e && this.destroy();
       } };
     }
     __name(Ci, "Ci");
@@ -2910,7 +2910,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     a(Jn, "run"), Jn(() => {
       Un(), t.loaded ? (p.trigger("input"), C.paused || Kn(), He(), Gi(), i.debug !== false && zn(), ze()) : (He(), _i(), ze());
     }), X("apl386", Tr, 45, 74), X("apl386o", Sr, 45, 74), X("sink", Cr, 6, 8, { chars: "\u2588\u263A\u263B\u2665\u2666\u2663\u2660\u25CF\u25CB\u25AA\u25A1\u25A0\u25D8\u266A\u266B\u2261\u25BA\u25C4\u2302\xDE\xC0\xDF\xD7\xA5\u2191\u2193\u2192\u2190\u25CC\u25CF\u25BC\u25B2 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u03A7\u2591\u2592\u2593\u1E00\u1E01\u1E02\u2502\u252C\u2524\u250C\u2510\u1E03\u1E04\u253C\u1E05\u1E06\u1E07\u1E08\u1E09\u1E0A\u1E0B\u1E0C\u2500\u251C\u2534\u2514\u2518\u1E0D\u1E0E\u205E\u1E0F\u1E10\u1E11\u1E12\u1E13\u1E14\u1E15\u1E16\u1E17\u1E18\u2584\u1E19\u1E1A\u1E1B\u1E1C\u2026\u1E1D\u1E1E\u1E1F\u1E20\u1E21\u1E22\u1E23\u1E24\u1E25\u1E26\u258C\u2590\u1E27\u1E28\u1E29\u1E2A\u1E2B\u1E2C\u1E2D\u1E2E\u1E2F\u1E30\u1E31\u1E32\u1E33\u1E34\u1E35\u1E36\u1E37\u1E38\u1E39\u1E3A\u1E3B\u1E3C\u1E3D\u1E3E\u1E3F\u1E40\u1E41\u1E42\u1E43\u1E44\u1E45\u1E46\u1E47\u1E48\u1E49\u1E4A\u1E4B\u1E4C\u1E4D\u1E4E\u1E4F\u1E50\u1E51\u1E52\u1E53\u1E54\u1E55\u1E56\u1E57\u1E58\u1E59\u1E5A\u1E5B\u1E5C\u1E5D\u1E5E\u1E5F\u1E60\u1E61\u1E62\u1E63\u1E64\u1E65\u1E66\u1E67\u1E68\u1E69\u1E6A\u1E6B\u1E6C\u1E6D\u1E6E\u1E6F\u1E70\u1E71\u1E72\u1E73\u1E74\u1E75\u1E76\u1E77\u1E78\u1E79\u1E7A\u1E7B\u1E7C" }), X("sinko", Rr, 8, 10), He(), ze();
-    let ye = { loadRoot: q, loadSprite: J, loadSpriteAtlas: Ee, loadSound: Ce, loadFont: X, loadShader: Se, loadAseprite: Et, loadPedit: $e, loadBean: _r, load: S, width: F, height: G, center: ot, dt: Z, time: nt, screenshot: bn, record: Nn, isFocused: jn, focus: Di, cursor: xn, regCursor: ii, fullscreen: Hr, isFullscreen: vn, onLoad: Ue, isTouch: () => t.isTouch, layers: Qr, camPos: Zr, camScale: ei, camRot: ti, shake: ni, toScreen: rt, toWorld: Lt, gravity: Fn, add: kt, readd: Ai, destroy: at, destroyAll: Oi, get: Ii, every: Vi, revery: Fi, pos: it, scale: st, rotate: si, color: oi, opacity: ai, origin: Ot, layer: ui, area: fi, sprite: Vt, text: pi, rect: mi, circle: gi, uvquad: wi, outline: Ui, body: xi, shader: vi, timer: Gn, solid: Ei, fixed: Ti, stay: Ft, health: Si, lifespan: Ci, z: ci, move: hi, outview: It, cleanup: di, follow: li, state: Ri, on: qe, onUpdate: Pe, onDraw: Tn, onCollide: Sn, onClick: Cn, onHover: Rn, onKeyDown: qt, onKeyPress: H, onKeyPressRepeat: Pt, onKeyRelease: Dt, onMouseDown: Mn, onMousePress: At, onMouseRelease: Ln, onMouseMove: qn, onCharInput: Pn, onTouchStart: Dn, onTouchMove: An, onTouchEnd: On, mousePos: K, mouseWorldPos: Jr, mouseDeltaPos: yn, isKeyDown: Mt, isKeyPressed: Le, isKeyPressedRepeat: Wt, isKeyReleased: tt, isMouseDown: Ze, isMousePressed: Me, isMouseReleased: et, isMouseMoved: Rt, loop: ri, wait: Wn, play: Xe, volume: Br, burp: un, audioCtx: w.ctx, Timer: fe, Line: le, Rect: ke, Circle: ht, Vec2: L, Color: v, Mat4: R, Quad: k, RNG: be, rng: mr, rand: Ge, randi: Ht, randSeed: wr, vec2: f, rgb: E, hsl2rgb: fr, quad: pr, choose: Ur, chance: gr, lerp: Ve, map: dt, mapc: dr, wave: Kt, deg2rad: he, rad2deg: Xt, testAreaRect: gt, testAreaLine: Zt, testAreaCircle: en, testAreaPolygon: tn, testAreaPoint: Ut, testAreaArea: nn, testLineLine: ce, testRectRect: zt, testRectLine: ft, testRectPoint: ae, testPolygonPoint: xe, testLinePolygon: _e, testPolygonPolygon: wt, testCircleCircle: Qt, testCirclePoint: mt, testRectPolygon: pt, drawSprite: hn, drawText: Xr, formatText: me, drawRect: Q, drawLine: We, drawLines: dn, drawTriangle: fn, drawCircle: Ct, drawEllipse: pn, drawUVQuad: pe, drawPolygon: Qe, drawFormattedText: we, pushTransform: re, popTransform: ie, pushTranslate: I, pushRotate: Je, pushScale: ne, debug: C, scene: Wi, go: Mi, addLevel: Pi, getData: Li, setData: _n, plug: Bn, ASCII_CHARS: Ar, CP437_CHARS: hs, canvas: t.canvas, addKaboom: ki, LEFT: L.LEFT, RIGHT: L.RIGHT, UP: L.UP, DOWN: L.DOWN, RED: v.RED, GREEN: v.GREEN, BLUE: v.BLUE, YELLOW: v.YELLOW, MAGENTA: v.MAGENTA, CYAN: v.CYAN, WHITE: v.WHITE, BLACK: v.BLACK, keyIsDown: T("keyIsDown()", "isKeyDown()", Mt), keyIsPressed: T("keyIsPressed()", "isKeyPressed()", Le), keyIsPressedRep: T("keyIsPressedRep()", "isKeyPressedRepeat()", Wt), keyIsReleased: T("keyIsReleased()", "isKeyReleased()", tt), mouseIsDown: T("mouseIsDown()", "isMouseDown()", Ze), mouseIsClicked: T("mouseIsClicked()", "isMousePressed()", Me), mouseIsReleased: T("mouseIsReleased()", "isMouseReleased()", et), mouseIsMoved: T("mouseIsMoved()", "isMouseMoved()", Rt), dir: T("dir()", "Vec2.fromAngle()", L.fromAngle), action: T("action()", "onUpdate()", Pe), render: T("render()", "onDraw()", Tn), collides: T("collides()", "onCollide()", Sn), clicks: T("clicks()", "onClick()", Cn), hovers: T("hovers()", "onHover()", Rn), keyDown: T("keyDown()", "onKeyDown()", qt), keyPress: T("keyPress()", "onKeyPress()", H), keyPressRep: T("keyPressRep()", "onKeyPressRepeat()", Pt), keyRelease: T("keyRelease()", "onKeyRelease()", Dt), mouseDown: T("mouseDown()", "onMouseDown()", Mn), mouseClick: T("mouseClick()", "onMousePress()", At), mouseRelease: T("mouseRelease()", "onMouseRelease()", Ln), mouseMove: T("mouseMove()", "onMouseMove()", qn), charInput: T("charInput()", "onCharInput()", Pn), touchStart: T("touchStart()", "onTouchStart()", Dn), touchMove: T("touchMove()", "onTouchMove()", An), touchEnd: T("touchEnd()", "onTouchEnd()", On), focused: T("focused()", "isFocused()", jn), ready: T("ready()", "onLoad()", Ue) };
+    let ye = { loadRoot: q, loadSprite: J, loadSpriteAtlas: Ee, loadSound: Ce, loadFont: X, loadShader: Se, loadAseprite: Et, loadPedit: $e, loadBean: _r, load: S, width: F, height: G, center: ot, dt: Z, time: nt, screenshot: bn, record: Nn, isFocused: jn, focus: Di, cursor: xn, regCursor: ii, fullscreen: Hr, isFullscreen: vn, onLoad: Ue, isTouch: () => t.isTouch, layers: Qr, camPos: Zr, camScale: ei, camRot: ti, shake: ni, toScreen: rt, toWorld: Lt, gravity: Fn, add: kt, readd: Ai, destroy: at, destroyAll: Oi, get: Ii, every: Vi, revery: Fi, pos: it, scale: st, rotate: si, color: oi, opacity: ai, origin: Ot, layer: ui, area: fi, sprite: Vt, text: pi, rect: mi, circle: gi, uvquad: wi, outline: Ui, body: xi, shader: vi, timer: Gn, solid: Ei, fixed: Ti, stay: Ft, health: Si, lifespan: Ci, z: ci, move: hi, outview: It, cleanup: di, follow: li, state: Ri, on: qe, onUpdate: Pe, onDraw: Tn, onCollide: Sn, onClick: Cn, onHover: Rn, onKeyDown: qt, onKeyPress: H, onKeyPressRepeat: Pt, onKeyRelease: Dt, onMouseDown: Mn, onMousePress: At, onMouseRelease: Ln, onMouseMove: qn, onCharInput: Pn, onTouchStart: Dn, onTouchMove: An, onTouchEnd: On, mousePos: K, mouseWorldPos: Jr, mouseDeltaPos: yn, isKeyDown: Mt, isKeyPressed: Le, isKeyPressedRepeat: Wt, isKeyReleased: tt, isMouseDown: Ze, isMousePressed: Me, isMouseReleased: et, isMouseMoved: Rt, loop: ri, wait: Wn, play: Xe, volume: Br, burp: un, audioCtx: w.ctx, Timer: fe, Line: le, Rect: ke, Circle: ht, Vec2: L, Color: v, Mat4: R, Quad: k, RNG: be, rng: mr, rand: Ge, randi: Ht, randSeed: wr, vec2: f, rgb: E, hsl2rgb: fr, quad: pr, choose: Ur, chance: gr, lerp: Ve, map: dt2, mapc: dr, wave: Kt, deg2rad: he, rad2deg: Xt, testAreaRect: gt, testAreaLine: Zt, testAreaCircle: en, testAreaPolygon: tn, testAreaPoint: Ut, testAreaArea: nn, testLineLine: ce, testRectRect: zt, testRectLine: ft, testRectPoint: ae, testPolygonPoint: xe, testLinePolygon: _e, testPolygonPolygon: wt, testCircleCircle: Qt, testCirclePoint: mt, testRectPolygon: pt, drawSprite: hn, drawText: Xr, formatText: me, drawRect: Q, drawLine: We, drawLines: dn, drawTriangle: fn, drawCircle: Ct, drawEllipse: pn, drawUVQuad: pe, drawPolygon: Qe, drawFormattedText: we, pushTransform: re, popTransform: ie, pushTranslate: I, pushRotate: Je, pushScale: ne, debug: C, scene: Wi, go: Mi, addLevel: Pi, getData: Li, setData: _n, plug: Bn, ASCII_CHARS: Ar, CP437_CHARS: hs, canvas: t.canvas, addKaboom: ki, LEFT: L.LEFT, RIGHT: L.RIGHT, UP: L.UP, DOWN: L.DOWN, RED: v.RED, GREEN: v.GREEN, BLUE: v.BLUE, YELLOW: v.YELLOW, MAGENTA: v.MAGENTA, CYAN: v.CYAN, WHITE: v.WHITE, BLACK: v.BLACK, keyIsDown: T("keyIsDown()", "isKeyDown()", Mt), keyIsPressed: T("keyIsPressed()", "isKeyPressed()", Le), keyIsPressedRep: T("keyIsPressedRep()", "isKeyPressedRepeat()", Wt), keyIsReleased: T("keyIsReleased()", "isKeyReleased()", tt), mouseIsDown: T("mouseIsDown()", "isMouseDown()", Ze), mouseIsClicked: T("mouseIsClicked()", "isMousePressed()", Me), mouseIsReleased: T("mouseIsReleased()", "isMouseReleased()", et), mouseIsMoved: T("mouseIsMoved()", "isMouseMoved()", Rt), dir: T("dir()", "Vec2.fromAngle()", L.fromAngle), action: T("action()", "onUpdate()", Pe), render: T("render()", "onDraw()", Tn), collides: T("collides()", "onCollide()", Sn), clicks: T("clicks()", "onClick()", Cn), hovers: T("hovers()", "onHover()", Rn), keyDown: T("keyDown()", "onKeyDown()", qt), keyPress: T("keyPress()", "onKeyPress()", H), keyPressRep: T("keyPressRep()", "onKeyPressRepeat()", Pt), keyRelease: T("keyRelease()", "onKeyRelease()", Dt), mouseDown: T("mouseDown()", "onMouseDown()", Mn), mouseClick: T("mouseClick()", "onMousePress()", At), mouseRelease: T("mouseRelease()", "onMouseRelease()", Ln), mouseMove: T("mouseMove()", "onMouseMove()", qn), charInput: T("charInput()", "onCharInput()", Pn), touchStart: T("touchStart()", "onTouchStart()", Dn), touchMove: T("touchMove()", "onTouchMove()", An), touchEnd: T("touchEnd()", "onTouchEnd()", On), focused: T("focused()", "isFocused()", jn), ready: T("ready()", "onLoad()", Ue) };
     if (i.plugins && i.plugins.forEach(Bn), i.global !== false)
       for (let e in ye)
         window[e] = ye[e];
@@ -2987,26 +2987,18 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   interpretMap(map, state);
   var { player } = state;
   var instructions = loadInstructions();
-  function topLeftCorner() {
-    return camPos().sub(width() / 2, height() / 2);
+  function animation(duration, callback) {
+    let t = 0;
+    const stop = onUpdate(() => {
+      t += dt();
+      callback(t / duration);
+    });
+    return wait(duration, stop);
   }
-  __name(topLeftCorner, "topLeftCorner");
-  function guiPos(_x, _y) {
-    return {
-      id: "guiPos",
-      require: ["pos"],
-      add() {
-        this.guiPos = vec2(_x, _y);
-        this.pos = topLeftCorner().add(this.guiPos);
-      },
-      update() {
-        this.pos = topLeftCorner().add(this.guiPos);
-      }
-    };
-  }
-  __name(guiPos, "guiPos");
+  __name(animation, "animation");
   var PlanPanel = class {
     constructor(instructions2) {
+      __publicField(this, "yUnit", 65);
       this.instructions = instructions2;
       this.current = 0;
       this.drawnInstructions = [];
@@ -3016,13 +3008,21 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       this.pointer = add([
         text(">"),
         pos(0, 0),
-        guiPos(0, 0)
+        fixed()
       ]);
       this.drawnInstructions = this.instructions.map((x, y) => add([
         text(x.name()),
-        pos(),
-        guiPos(65, y * 65)
+        pos(65, 65 * y),
+        fixed()
       ]));
+    }
+    next() {
+      this.drawnInstructions.forEach((instruction) => {
+        const actualY = instruction.pos.y;
+        animation(1, (percent) => {
+          instruction.pos.y = actualY - this.yUnit * percent;
+        });
+      });
     }
   };
   __name(PlanPanel, "PlanPanel");
@@ -3031,7 +3031,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   onUpdate(() => {
     camPos(player.pos);
   });
-  timer(1, () => {
+  wait(1, () => {
+    planPanel.next();
   });
 })();
 //# sourceMappingURL=game.js.map

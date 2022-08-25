@@ -97,7 +97,22 @@ function guiPos(_x, _y) {
   }
 }
 
+/**
+* animates callback passing a value increasing from
+* 0.0 to 1.0, proportional to the time completed
+*/
+function animation(duration, callback) {
+  let t = 0
+  const stop = onUpdate(() => {
+    t += dt()
+    callback(t/duration)
+  })
+  return wait(duration, stop)
+}
+
 class PlanPanel {
+
+  yUnit = 65
   constructor(instructions) {
     this.instructions = instructions
     this.current = 0
@@ -109,15 +124,24 @@ class PlanPanel {
     this.pointer = add([
       text(">"),
       pos(0, 0),
-      guiPos(0, 0)
+      fixed()
     ])
 
     this.drawnInstructions = this.instructions
       .map((x, y) => add([
         text(x.name()), 
-        pos(),
-        guiPos(65, y * 65)
+        pos(65, 65 * y),
+        fixed()
       ]))
+  }
+
+  next() {
+    this.drawnInstructions.forEach((instruction) => {
+      const actualY = instruction.pos.y
+      animation(1, (percent) => {
+        instruction.pos.y = actualY - this.yUnit * percent
+      })
+    })
   }
 }
 
@@ -128,7 +152,7 @@ onUpdate(() => {
   camPos(player.pos)
 })
 
-timer(1, () => {
-  
+wait(1, () => {
+  planPanel.next()
 })
 
