@@ -18,7 +18,7 @@ function getMapTiles() {
 class Op {
   name = () => 'op'
   action = (player) => null
-  Op(name, action) {
+  constructor(name, action) {
     this.name = name
     this.action = action
   }
@@ -78,6 +78,51 @@ interpretMap(map, state)
 const {player} = state
 
 const instructions = loadInstructions()
+
+function topLeftCorner() {
+  return camPos().sub(width()/2, height()/2)
+}
+
+function guiPos(_x, _y) {
+  return {
+    id: 'guiPos',
+    require: ['pos'],
+    add() {
+      this.guiPos = vec2(_x, _y)
+      this.pos = topLeftCorner().add(this.guiPos)
+    },
+    update() {
+      this.pos = topLeftCorner().add(this.guiPos)
+    }
+  }
+}
+
+class PlanPanel {
+  constructor(instructions) {
+    this.instructions = instructions
+    this.current = 0
+    this.drawnInstructions = []
+    this.pointer = null
+  }
+
+  draw() {
+    this.pointer = add([
+      text(">"),
+      pos(0, 0),
+      guiPos(0, 0)
+    ])
+
+    this.drawnInstructions = this.instructions
+      .map((x, y) => add([
+        text(x.name()), 
+        pos(),
+        guiPos(65, y * 65)
+      ]))
+  }
+}
+
+const planPanel = new PlanPanel(instructions)
+planPanel.draw()
 
 onUpdate(() => {
   camPos(player.pos)

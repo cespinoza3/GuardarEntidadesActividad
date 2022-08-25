@@ -2930,11 +2930,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   }
   __name(getMapTiles, "getMapTiles");
   var Op = class {
-    constructor() {
+    constructor(name, action) {
       __publicField(this, "name", /* @__PURE__ */ __name(() => "op", "name"));
       __publicField(this, "action", /* @__PURE__ */ __name((player2) => null, "action"));
-    }
-    Op(name, action) {
       this.name = name;
       this.action = action;
     }
@@ -2989,6 +2987,47 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   interpretMap(map, state);
   var { player } = state;
   var instructions = loadInstructions();
+  function topLeftCorner() {
+    return camPos().sub(width() / 2, height() / 2);
+  }
+  __name(topLeftCorner, "topLeftCorner");
+  function guiPos(_x, _y) {
+    return {
+      id: "guiPos",
+      require: ["pos"],
+      add() {
+        this.guiPos = vec2(_x, _y);
+        this.pos = topLeftCorner().add(this.guiPos);
+      },
+      update() {
+        this.pos = topLeftCorner().add(this.guiPos);
+      }
+    };
+  }
+  __name(guiPos, "guiPos");
+  var PlanPanel = class {
+    constructor(instructions2) {
+      this.instructions = instructions2;
+      this.current = 0;
+      this.drawnInstructions = [];
+      this.pointer = null;
+    }
+    draw() {
+      this.pointer = add([
+        text(">"),
+        pos(0, 0),
+        guiPos(0, 0)
+      ]);
+      this.drawnInstructions = this.instructions.map((x, y) => add([
+        text(x.name()),
+        pos(),
+        guiPos(65, y * 65)
+      ]));
+    }
+  };
+  __name(PlanPanel, "PlanPanel");
+  var planPanel = new PlanPanel(instructions);
+  planPanel.draw();
   onUpdate(() => {
     camPos(player.pos);
   });
