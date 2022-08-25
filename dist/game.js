@@ -1,6 +1,11 @@
 (() => {
   var __defProp = Object.defineProperty;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+  var __publicField = (obj, key, value) => {
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+    return value;
+  };
 
   // node_modules/kaboom/dist/kaboom.mjs
   var ir = Object.defineProperty;
@@ -2915,14 +2920,79 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   // code/main.js
   no();
   loadSprite("bean", "sprites/bean.png");
-  add([
-    sprite("bean"),
-    pos(80, 40),
-    area()
-  ]);
-  onClick(() => {
-    addKaboom(mousePos());
+  loadSprite("steel", "sprites/steel.png");
+  function getMapTiles() {
+    return [
+      "##########",
+      "#p------x#",
+      "##########"
+    ];
+  }
+  __name(getMapTiles, "getMapTiles");
+  var Op = class {
+    constructor() {
+      __publicField(this, "name", /* @__PURE__ */ __name(() => "op", "name"));
+      __publicField(this, "action", /* @__PURE__ */ __name((player2) => null, "action"));
+    }
+    Op(name, action) {
+      this.name = name;
+      this.action = action;
+    }
+    static makeLookAt(name, direction) {
+      return new Op(() => name, (player2) => {
+        player2.direction = direction;
+      });
+    }
+  };
+  __name(Op, "Op");
+  var ops = {
+    right: Op.makeLookAt("right", RIGHT),
+    left: Op.makeLookAt("left", LEFT),
+    up: Op.makeLookAt("up", UP),
+    down: Op.makeLookAt("down", DOWN)
+  };
+  function loadInstructions() {
+    return Array(7).fill(ops.right);
+  }
+  __name(loadInstructions, "loadInstructions");
+  var blockPos = /* @__PURE__ */ __name((x, y) => pos(x * 65, y * 65), "blockPos");
+  function interpretMap(map2, state2) {
+    function makePlayer(blockX, blockY) {
+      return add([
+        sprite("bean"),
+        blockPos(blockX, blockY),
+        area()
+      ]);
+    }
+    __name(makePlayer, "makePlayer");
+    function makeSteel(x, y) {
+      return add([
+        sprite("steel"),
+        blockPos(x, y),
+        area()
+      ]);
+    }
+    __name(makeSteel, "makeSteel");
+    map2.forEach((row, y) => {
+      Array.prototype.forEach.call(row, (c, x) => {
+        if (c == "p") {
+          state2.player = makePlayer(x, y);
+        } else if (c == "#") {
+          makeSteel(x, y);
+        }
+      });
+    });
+  }
+  __name(interpretMap, "interpretMap");
+  var state = {};
+  var map = getMapTiles();
+  interpretMap(map, state);
+  var { player } = state;
+  var instructions = loadInstructions();
+  onUpdate(() => {
+    camPos(player.pos);
   });
-  onKeyPress("b", burp);
+  timer(1, () => {
+  });
 })();
 //# sourceMappingURL=game.js.map
